@@ -37,6 +37,8 @@ function checkLength(str) {
 
 function validBusinessAcraCheck(str) {
 
+    console.log('test')
+
     let test = true;
 
     let digits = str.substring(0, 9);
