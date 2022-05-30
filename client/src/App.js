@@ -17,7 +17,7 @@ function App() {
 
   return (
     <div>
-      Main Page testing
+      Main Page testing v1.0
     </div>
   )
 
