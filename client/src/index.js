@@ -9,13 +9,15 @@ import {
   Route
 } from 'react-router-dom';
 import UenPage from './pages/uen.page';
+import WeatherPage from './pages/weather.page';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path='/' element={<App />} />
+      <Route exact path='/' element={<App />} />
       <Route path="/uen" element={<UenPage />} />
+      <Route path="/weather" element={<WeatherPage />} />
     </Routes>
   </BrowserRouter>
 );

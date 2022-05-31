@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function App() {
 
@@ -18,6 +19,22 @@ function App() {
   return (
     <div>
       Main Page testing v1.0
+
+    <div>
+      
+        <Link to = '/uen'>
+          <button>
+            UEN
+          </button>
+        </Link>
+
+        <Link to = '/weather'>
+          <button>
+            Weather
+          </button>
+        </Link>
+    </div>
+
     </div>
   )
 
