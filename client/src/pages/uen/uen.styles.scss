@@ -1,0 +1,53 @@
+#uenPage {
+    display: grid;
+    height: 100VH;
+    width: 100VW;
+
+    #uenPageValidatorBox {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: lightblue;
+
+        #uenPageValidatorTitle {
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
+        }
+
+        #uenPageValidatorInputBox {
+
+            #uenPageValidatorInput {
+                font-size: 20px;
+            }
+
+        }
+
+        #uenPageValidatorButtonBox {
+
+            #uenPageValidatorButton {
+                color: white;
+                background-color: lightblue;
+                border: 3px solid white;
+                font-size: 20px;
+            }
+
+        }
+    }
+}
+
+.maximise {
+    grid-template-columns: 70% 30%;
+}
+
+.minimise {
+    grid-template-columns: 90% 10%;
+}
+
+.validatorBoxComponent {
+    margin-top: 10px;
+    width: 60%;
+}

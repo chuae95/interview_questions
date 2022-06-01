@@ -16,9 +16,9 @@ app.post("/uenValidation", (req, res) => {
     let result = validateUENNumber(req.body.value);
 
     if (result) {
-        res.send({status: true})
+        res.send(result)
     } else {
-        res.send({status: false})
+        res.send(result)
     }
 
 
@@ -43,11 +43,18 @@ app.get("/weatherRetrieval", async (req, res) => {
 
 function validateUENNumber(uen) {
 
+    let result = {};
+
     let lengthTest = checkLength(uen);
 
-    let validAcraTypeTest = uen.length == 9 ? validBusinessAcraCheck(uen) : validLocalBusinessOrOtherEntitiesCheck(uen);
 
-    return validAcraTypeTest && lengthTest;
+    if (!lengthTest) {
+        result['status'] = false;
+        result['type'] = '';
+        return result;
+    }
+
+    return validAcraTypeTest = uen.length == 9 ? validBusinessAcraCheck(uen) : validLocalBusinessOrOtherEntitiesCheck(uen);
     
 }
 
@@ -60,19 +67,29 @@ function validBusinessAcraCheck(str) {
     console.log('test')
 
     let test = true;
+    let result = {};
 
     let digits = str.substring(0, 9);
     let alphabet = str[str.length - 1];
     
     test = digitsCheck(digits) && alphabetCheck(alphabet);
 
-    return test;
+    if (test) {
+        result['status'] = test;
+        result['type'] = 'businessUen';
+    } else {
+        result['status'] = test;
+        result['type'] = '';
+    }
+
+    return result;
 
 }
 
 function validLocalBusinessAcraCheck(str) {
 
     let test = true;
+    let result = {};
 
     let year = str.substring(0, 4);
     let digits = str.substring(4, 9);
@@ -87,11 +104,20 @@ function validLocalBusinessAcraCheck(str) {
 
     test = digitsCheck(digits) && alphabetCheck(alphabet);
 
-    return test;
+    if (test) {
+        result['status'] = test;
+        result['type'] = 'localBusinessUen';
+    } else {
+        result['status'] = test;
+        result['type'] = '';
+    }
+
+    return result;
 }
 
 function validOtherEntitiesCheck(str) {
     let test = true;
+    let result = {};
 
     let year = str.substring(1, 3);
     let entity = str.substring(3, 5);
@@ -99,8 +125,16 @@ function validOtherEntitiesCheck(str) {
     let alphabet = str[str.length - 1];
 
     test = digitsCheck(year) && alphabetCheck(alphabet) && digitsCheck(digits) && entityCheck(entity);
-    
-    return test;
+
+    if (test) {
+        result['status'] = test;
+        result['type'] = 'otherEntitiesUen';
+    } else {
+        result['status'] = test;
+        result['type'] = '';
+    }
+
+    return result;
 }
 
 function validLocalBusinessOrOtherEntitiesCheck(str) {

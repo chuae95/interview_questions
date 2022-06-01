@@ -4,13 +4,24 @@ import {
     Row,
     Col
  } from 'react-bootstrap';
+ import LinkButton from '../../components/linkButton/linkButton.component';
 
 function WeatherPage() {
 
     const [ data, setData ] = useState([]);
     const [ loading, setLoading ] = useState(false);
-
     const [ location, setLocation ] = useState("");
+
+    const links = [
+        {
+          url: '/',
+          display: 'Back to Home Page'
+        }, 
+        {
+          url: '/uen',
+          display: 'Use UEN validator'
+        }
+      ];
 
     useEffect(() => {
         
@@ -109,6 +120,13 @@ function WeatherPage() {
                         </Row>
                     </div>
                 </div>
+
+            }
+
+            {
+              links.map(link => (
+                <LinkButton link={link} />
+              ))
 
             }
         </>

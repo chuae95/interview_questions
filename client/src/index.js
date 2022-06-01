@@ -8,8 +8,8 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import UenPage from './pages/uen.page';
-import WeatherPage from './pages/weather.page';
+import UenPage from './pages/uen/uen.page';
+import WeatherPage from './pages/weather/weather.page';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

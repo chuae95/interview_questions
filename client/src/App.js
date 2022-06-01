@@ -1,39 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import './App.scss';
+import LinkButton from './components/linkButton/linkButton.component';
 
 function App() {
 
-  
-
-  // useEffect(() => {
-  //   fetch("/api")
-  //     .then(resp => {
-  //       resp.json();
-  //     }) 
-  //     .then(info => {
-  //       setData(info);
-  //     }
-  //   )
-  // }, [])
+  const links = [
+    {
+      url: '/uen',
+      display: 'UEN Validator'
+    }, 
+    {
+      url: '/weather',
+      display: 'Weather Forecast'
+    }
+  ];
 
   return (
-    <div>
-      Main Page testing v1.0
+    <div id='homePage'>
 
-    <div>
-      
-        <Link to = '/uen'>
-          <button>
-            UEN
-          </button>
-        </Link>
+      <div id='homePageBox'>
 
-        <Link to = '/weather'>
-          <button>
-            Weather
-          </button>
-        </Link>
-    </div>
+        <div id='homePageTitle'>
+
+          HOME PAGE
+
+        </div>
+
+        <div id='homePageButtons'>
+
+            {
+              links.map(link => (
+                <LinkButton link={link} />
+              ))
+
+            }
+
+        </div>
+
+      </div>
 
     </div>
   )

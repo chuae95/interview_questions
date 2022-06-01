@@ -1,0 +1,28 @@
+#homePage {
+    width: 100VW;
+    height: 100VH;
+    background-color: lightblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #homePageBox {
+        background-color: white;
+        width: 50%;
+        height: 50%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        #homePageTitle {
+            font-size: 40px;
+            font-weight: bold;
+            color: lightblue;
+        }
+
+        #homePageButtons {
+            display: flex;
+        }
+    }
+}
