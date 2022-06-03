@@ -1,7 +1,6 @@
 #uenPage {
-    display: grid;
-    height: 100VH;
-    width: 100VW;
+    height: 100%;
+    width: 100%;
 
     #uenPageValidatorBox {
         height: 100%;
@@ -37,6 +36,39 @@
 
         }
     }
+}
+
+.sideBarBox {
+    width: 100%;
+    height: 100%;
+
+    .sideBarButtonsBox {
+        display: flex;
+        align-items: flex-end;
+        height: 50%;
+    }
+
+    #sideBarCollapse {
+        position:absolute;
+        bottom: 10px;
+        width: 30%;
+    }
+
+
+}
+
+#sideBarExpand {
+    position:absolute;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+}
+
+.toggleButton {
+    background-color: darkgrey;
+    color: white;
 }
 
 .maximise {

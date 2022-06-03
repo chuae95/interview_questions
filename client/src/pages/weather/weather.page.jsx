@@ -4,24 +4,15 @@ import {
     Row,
     Col
  } from 'react-bootstrap';
- import LinkButton from '../../components/linkButton/linkButton.component';
+ import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 function WeatherPage() {
 
     const [ data, setData ] = useState([]);
     const [ loading, setLoading ] = useState(false);
     const [ location, setLocation ] = useState("");
-
-    const links = [
-        {
-          url: '/',
-          display: 'Back to Home Page'
-        }, 
-        {
-          url: '/uen',
-          display: 'Use UEN validator'
-        }
-      ];
+    const [ weather, setWeather] = useState("");
+    const [ weatherOptions, setWeatherOptions ] = useState([]);
 
     useEffect(() => {
         
@@ -39,9 +30,28 @@ function WeatherPage() {
         let response = await fetch('/weatherRetrieval');
         let data = await response.json();
 
+        let options = generateWeatherConditions(data.weather)
+        setWeatherOptions(options);
+
         let result = await generateWeatherForecastsForArea(data.places, data.weather);
         setData(result);
         setLoading(false);
+
+    }
+
+    function generateWeatherConditions(weathers) {
+
+        let weatherData = [];;
+
+        for (const w of weathers) {
+
+            if (!weatherData.includes(w.forecast)) {
+                weatherData.push(w.forecast)
+            }
+            
+        }
+
+        return weatherData;
 
     }
 
@@ -67,6 +77,12 @@ function WeatherPage() {
         setLocation(e.target.value);
     }
 
+    function updateWeather(e) {
+        setWeather(e)
+
+        searchForResults(location)
+    }
+
     async function searchForResults(str) {
         setLoading(true);
 
@@ -77,7 +93,7 @@ function WeatherPage() {
         let filtered = [];
 
         result.map(location => {
-            if (location.name.includes(str)) {
+            if (location.name.includes(str) && location.forecast === weather) {
                 filtered.push(location);
             }
         })
@@ -105,6 +121,20 @@ function WeatherPage() {
                         </button>
                     </div>
 
+                    <DropdownButton
+                        alignRight
+                        title="Filter by Weather"
+                        id="dropdown-menu-align-right"
+                        onSelect={updateWeather}
+                    >
+                        {
+                            weatherOptions.map(w => (
+                                <Dropdown.Item eventKey={w}>{w}</Dropdown.Item>
+                            ))
+                        }
+                        
+                    </DropdownButton>
+
                     <div>
                         <Row>
                             {data.map(i => (
@@ -120,13 +150,6 @@ function WeatherPage() {
                         </Row>
                     </div>
                 </div>
-
-            }
-
-            {
-              links.map(link => (
-                <LinkButton link={link} />
-              ))
 
             }
         </>

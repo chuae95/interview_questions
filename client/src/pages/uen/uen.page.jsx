@@ -1,23 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './uen.styles.scss';
-import LinkButton from '../../components/linkButton/linkButton.component';
+import Modal from "react-bootstrap/Modal";
 
 function UenPage() {
 
     const [uenNumber, setUenNumber] = useState("");
     const [data, setData] = useState(null);
-    const [maximise, setMaximise] = useState(true);
-
-    const links = [
-        {
-          url: '/',
-          display: 'Back to Home Page'
-        }, 
-        {
-          url: '/weather',
-          display: 'Use Weather Forecast'
-        }
-      ];
+    const [ isOpen, setIsOpen ] = useState(false);
 
     useEffect(() => {
 
@@ -37,15 +26,20 @@ function UenPage() {
         let result = await response.json();
 
         setData(result);
+        setIsOpen(true)
 
     }
 
     function updateUenNumber(e) {
         setUenNumber(e.target.value);
     }
+
+    function hideModal() {
+        setIsOpen(false);
+    }
     
     return (
-        <div id='uenPage' className={`${maximise ? `maximise` : `minimise` }`} >
+        <div id='uenPage'>
 
             <div id='uenPageValidatorBox'>
 
@@ -67,13 +61,27 @@ function UenPage() {
                         
                             data.status ? 
                                 <>
-                                    <div>Valid UEN number provided</div>
-                                    <div>{data.type}</div>
+                                    <Modal show={isOpen} onHide={hideModal}>
+                                        <Modal.Header>
+                                            <Modal.Title>Valid UEN number format provided!</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>{data.type}</Modal.Body>
+                                        <Modal.Footer>
+                                            <button onClick={hideModal}>Cancel</button>
+                                        </Modal.Footer>
+                                    </Modal>
                                 </>
                                 :
                                 <>
-                                    <div>Invalid UEN number provided.</div>
-                                    <div>{data.type}</div>
+                                    <Modal show={isOpen} onHide={hideModal}>
+                                        <Modal.Header>
+                                            <Modal.Title>Invalid UEN number format provided...</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>{data.type}</Modal.Body>
+                                        <Modal.Footer>
+                                            <button onClick={hideModal}>Cancel</button>
+                                        </Modal.Footer>
+                                    </Modal>
                                 </>
                             
                         
@@ -84,35 +92,6 @@ function UenPage() {
                 </div>
 
             </div>
-
-            <div>
-
-                {maximise ? 
-
-                    <>
-
-                        {
-                        links.map(link => (
-                            <LinkButton link={link} />
-                        ))
-
-                        }
-
-                        <div>
-                            <button onClick={() => setMaximise(false)}>X</button>
-                        </div>
-
-                    </>
-
-                    : 
-
-                    <div>
-                    <button onClick={() => setMaximise(true)}>View Sidebar</button>
-                    </div>
-                    
-                }
-            </div>
-
 
         </div>
     )

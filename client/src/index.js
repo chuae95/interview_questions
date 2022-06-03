@@ -10,15 +10,19 @@ import {
 } from 'react-router-dom';
 import UenPage from './pages/uen/uen.page';
 import WeatherPage from './pages/weather/weather.page';
+import NavBar from './components/navBar/navBar.component';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
+    <NavBar />
+    <div style={{'height': '90VH'}}>
     <Routes>
       <Route exact path='/' element={<App />} />
       <Route path="/uen" element={<UenPage />} />
       <Route path="/weather" element={<WeatherPage />} />
     </Routes>
+    </div>
   </BrowserRouter>
 );
 

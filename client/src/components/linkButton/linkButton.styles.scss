@@ -3,10 +3,10 @@
     border: 2px solid #d3d3d3;
     min-width: fit-content;
     margin: 5px;
-    height: 40px;
     box-shadow: 3px 2px 3px lightgrey;
     color: white;
     font-size: 18px;
+    min-height: fit-content;
 
     &:hover {
         position: relative;
