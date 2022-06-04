@@ -162,26 +162,29 @@ function WeatherPage() {
                                 :
 
                                 <div id = 'weatherPageInfoDisplayBox'>
-                                    <Row fluid id = 'weatherPageInfoDisplayRow'>
 
-                                        {
-                                            data.length !== 0 ? 
+                                    {
+                                        data.length !== 0 ? 
 
-                                            data.map(i => (
+                                    <Row id = 'weatherPageInfoDisplayRow'>
 
-                                                <InfoCard info={i} />
+                                        {data.map(i => (
+
+                                            <InfoCard info={i} />
                                                 
-                                            )) :
-
-                                            <div>
-                                                <div id = 'weatherPageErrorMessage'>
-                                                    No valid forecasts matched your filters.
-                                                </div>
-                                            </div>
-                                        }
-
+                                        ))}
                                         
                                     </Row>
+
+                                        :
+
+                                    <div id = 'weatherPageErrorBox'>
+                                        <div id = 'weatherPageErrorMessage'>
+                                            No valid forecasts matched your filters.
+                                        </div>
+                                    </div>
+
+                                    }
                                 </div>
                     
                         }

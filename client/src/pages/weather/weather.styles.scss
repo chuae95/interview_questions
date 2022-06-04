@@ -53,22 +53,30 @@
         height: 100%;
         overflow-y: scroll;
         padding: 30px;
+        position: relative;
+        top: 20px;
 
         #weatherPageInfoDisplayBox {
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
     }
 
 }
 
-#weatherPageErrorMessage {
+#weatherPageErrorBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
-    font-size: 30px;
+
+    #weatherPageErrorMessage {
+        font-size: 30px;
+    }
+
 }
+
+
 
 

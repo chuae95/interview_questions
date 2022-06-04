@@ -28,8 +28,8 @@ function InfoCard({info}) {
 
                 info.forecast !== undefined ?
 
-                <Col className="colBox" xs={4}>
-                    <Card>
+                <Col xs={4}>
+                    <Card style={{'margin': '5px'}}>
                         <Card.Body className="colCardBody">
                             <Card.Img className="cardImg" src={`/images/${generateWeatherIcon(info.forecast)}`}/>
                             <Card.Title>
