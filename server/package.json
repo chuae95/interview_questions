@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha",
+    "setup": "concurrently \"npm run dev\" \"cd ../client && npm install && npm start\"",
     "start": "concurrently \"npm run dev\" \"cd ../client && npm start\"",
     "dev": "nodemon server"
   },
