@@ -173,8 +173,8 @@ function WeatherPage() {
                                                 
                                             )) :
 
-                                            <div id = 'weatherPageErrorMessage'>
-                                                <div>
+                                            <div>
+                                                <div id = 'weatherPageErrorMessage'>
                                                     No valid forecasts matched your filters.
                                                 </div>
                                             </div>
