@@ -6,7 +6,6 @@ function NavBar() {
 
     return (
         <Navbar id='navBar' bg="light" expand="lg">
-            <Container>
                 <Navbar.Brand href="/">Home</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -15,7 +14,6 @@ function NavBar() {
                     <Nav.Link href="/weather">Weather</Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
-            </Container>
         </Navbar>
     )
 

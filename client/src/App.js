@@ -26,9 +26,12 @@ function App() {
 
         </div>
 
-        <div>
+        <div id = 'homePageDescription'>
           Created by : Eugene Chua
+          <br />
+          <div id = 'homePageExplanation'>
           To begin, simply select either of the buttons below to try out the Uen or Weather function
+          </div>
         </div>
 
         <div id='homePageButtons'>

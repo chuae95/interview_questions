@@ -16,12 +16,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <NavBar />
-    <div style={{'height': '90VH'}}>
-    <Routes>
-      <Route exact path='/' element={<App />} />
-      <Route path="/uen" element={<UenPage />} />
-      <Route path="/weather" element={<WeatherPage />} />
-    </Routes>
+    <div id = 'mainHolder'>
+      <Routes>
+        <Route exact path='/' element={<App />} />
+        <Route path="/uen" element={<UenPage />} />
+        <Route path="/weather" element={<WeatherPage />} />
+      </Routes>
     </div>
   </BrowserRouter>
 );

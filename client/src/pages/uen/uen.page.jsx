@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './uen.styles.scss';
-import Modal from "react-bootstrap/Modal";
+import ModalBox from '../../components/modalBox/modalBox.component';
 
 function UenPage() {
 
@@ -48,7 +48,7 @@ function UenPage() {
                 </div>
 
                 <div className='validatorBoxComponent' id='uenPageValidatorInputBox'>
-                    <input id = 'uenPageValidatorInput' value={uenNumber} onChange={(e) => updateUenNumber(e)} />
+                    <input id = 'uenPageValidatorInput' placeHolder='Enter UEN number here' value={uenNumber} onChange={(e) => updateUenNumber(e)} />
                 </div>
 
                 <div className='validatorBoxComponent' id='uenPageValidatorButtonBox'>
@@ -58,33 +58,9 @@ function UenPage() {
                 <div>
                     <div>
                         {data ? 
-                        
-                            data.status ? 
-                                <>
-                                    <Modal show={isOpen} onHide={hideModal}>
-                                        <Modal.Header>
-                                            <Modal.Title>Valid UEN number format provided!</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>{data.type}</Modal.Body>
-                                        <Modal.Footer>
-                                            <button onClick={hideModal}>Cancel</button>
-                                        </Modal.Footer>
-                                    </Modal>
-                                </>
-                                :
-                                <>
-                                    <Modal show={isOpen} onHide={hideModal}>
-                                        <Modal.Header>
-                                            <Modal.Title>Invalid UEN number format provided...</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>{data.type}</Modal.Body>
-                                        <Modal.Footer>
-                                            <button onClick={hideModal}>Cancel</button>
-                                        </Modal.Footer>
-                                    </Modal>
-                                </>
-                            
-                        
+                                
+                                <ModalBox data={data} isOpen={isOpen} hideModal={hideModal} />
+                                   
                         : null
 
                         }

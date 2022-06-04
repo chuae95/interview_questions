@@ -1,11 +1,11 @@
-const validateUENNumber = require('../../utils/validations');
+const uenValidator = require('../../utils/validations');
 
 const validateUEN = (req, res) => {
 
     let providedStr = req.body.value;
     let modified = providedStr.replace(/\s/g, "").toUpperCase();
 
-    let result = validateUENNumber.validateUENNumber(modified);
+    let result = uenValidator.validateUENNumber(modified);
 
     res.send(result)
 

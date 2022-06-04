@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#mainHolder {
+  width: 100VW;
+  height: 100VH;
+  position: fixed;
+  top: 50px;
+  min-width: 1000px;
+}

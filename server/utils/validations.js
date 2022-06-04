@@ -1,15 +1,11 @@
 function validateUENNumber(uen) {
 
-    let result = {};
-
     let lengthTest = checkLength(uen);
 
     let characterTest = checkInvalidCharacters(uen);
 
     if (!lengthTest || !characterTest) {
-        result['status'] = false;
-        result['type'] = '';
-        return result;
+        return setResponse(false, 'invalidUen', 'Format of UEN number provided is incorrect, check the length and make sure no invalid characters are given');
     }
 
     return validAcraTypeTest = uen.length == 9 ? validBusinessAcraCheck(uen) : validLocalBusinessOrOtherEntitiesCheck(uen);
@@ -26,8 +22,6 @@ function checkInvalidCharacters(str) {
 
 function validBusinessAcraCheck(str) {
 
-    console.log('test')
-
     let test = true;
     let result = {};
 
@@ -37,11 +31,9 @@ function validBusinessAcraCheck(str) {
     test = digitsCheck(digits) && alphabetCheck(alphabet);
 
     if (test) {
-        result['status'] = test;
-        result['type'] = 'businessUen';
+        result = setResponse(test, 'businessUen', 'UEN number Provided matches a business registered with ACRA.');
     } else {
-        result['status'] = test;
-        result['type'] = '';
+        result = setResponse(test, 'invalidBusinessUen', 'Invalid UEN number format.');
     }
 
     return result;
@@ -54,24 +46,15 @@ function validLocalBusinessAcraCheck(str) {
     let result = {};
 
     let year = str.substring(0, 4);
-    let digits = str.substring(4, 9);
+    let digits = str.substring(4, 10);
     let alphabet = str[str.length - 1];
 
-    if (/^[0-9]*$/.test(year)) {
-        let yearValue = parseInt(year);
-        test = new Date().getFullYear() >= yearValue;
-    } else {
-        test = false;
-    }
-
-    test = digitsCheck(digits) && alphabetCheck(alphabet);
+    test = digitsCheck(digits) && alphabetCheck(alphabet) && yearCheck(year);
 
     if (test) {
-        result['status'] = test;
-        result['type'] = 'localBusinessUen';
+        result = setResponse(test, 'localBusinessUen', 'UEN number Provided matches a local business registered with ACRA.');
     } else {
-        result['status'] = test;
-        result['type'] = '';
+        result = setResponse(test, 'invalidLocalBusinessUen', 'Invalid UEN number format.');
     }
 
     return result;
@@ -88,12 +71,13 @@ function validOtherEntitiesCheck(str) {
 
     test = digitsCheck(year) && alphabetCheck(alphabet) && digitsCheck(digits) && entityCheck(entity);
 
+    result['status'] = test;
+
     if (test) {
-        result['status'] = test;
-        result['type'] = 'otherEntitiesUen';
+        result = setResponse(test, 'otherEntitiesUen', 'UEN number Provided matches new UEN issued for other entities');
+
     } else {
-        result['status'] = test;
-        result['type'] = '';
+        result = setResponse(test, 'invalidOtherEntitiesUen', 'Invalid UEN number format');
     }
 
     return result;
@@ -101,16 +85,31 @@ function validOtherEntitiesCheck(str) {
 
 function validLocalBusinessOrOtherEntitiesCheck(str) {
 
-    let test = true;
+    let result = {}
 
     if (/[R-T]/.test(str[0])) {
         //trigger other entity check
-        test = validOtherEntitiesCheck(str);
+        result = validOtherEntitiesCheck(str);
     } else if (/[0-9]/.test(str[0])) {
         //trigger valid local business check
-        test = validLocalBusinessAcraCheck(str);
+        result = validLocalBusinessAcraCheck(str);
     } else {
         //it does not fall under the above checks so instantly fail
+        result = setResponse(false, 'invalidLocalBusinessOrOtherEntitiesUen', 'UEN number Provided does not match either local business ACRA or other Entities format');
+    }
+
+    return result;
+
+}
+
+function yearCheck(str) {
+
+    let test  = true;
+
+    if (/^[0-9]*$/.test(str)) {
+        let yearValue = parseInt(str);
+        test = new Date().getFullYear() >= yearValue;
+    } else {
         test = false;
     }
 
@@ -146,13 +145,25 @@ function alphabetCheck(str) {
 function entityCheck(str) {
     let test = true;
 
-    let entities = ["LP", "LL", "FC", "PF", "RF", "MQ", "MM", "NB", "CC", "CS", "MB", "FM", "GS", "DP", "CP", "NR", "CM", "CD", "MD", "HS", "VH", "CH", "MH", "CL", "XL", "CX", "HC", "RP", "TU", "TC", "FB", "FN", "PA", "PB", "SS", "MC", "SM", "GA", "GB"];
+    const entities = ["LP", "LL", "FC", "PF", "RF", "MQ", "MM", "NB", "CC", "CS", "MB", "FM", "GS", "DP", "CP", "NR", "CM", "CD", "MD", "HS", "VH", "CH", "MH", "CL", "XL", "CX", "HC", "RP", "TU", "TC", "FB", "FN", "PA", "PB", "SS", "MC", "SM", "GA", "GB"];
 
     if (entities.indexOf(str) < 0) {
         test = false;
     } 
 
     return test;
+}
+
+function setResponse(testStatus, type, description) {
+
+    let resp = {}
+
+    resp['status'] = testStatus;
+    resp['type'] = type;
+    resp['description'] = description;
+
+    return resp;
+
 }
 
 module.exports = { validateUENNumber };

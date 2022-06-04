@@ -4,7 +4,11 @@ import {
     Row,
     Col
  } from 'react-bootstrap';
- import { Dropdown, DropdownButton } from 'react-bootstrap';
+import DropDown from '../../components/dropDown/dropDown.component';
+import InfoCard from '../../components/infoCard/infoCard.component';
+import Loading from '../../components/loading/loading.component';
+import './weather.styles.scss';
+
 
 function WeatherPage() {
 
@@ -13,8 +17,13 @@ function WeatherPage() {
     const [ location, setLocation ] = useState("");
     const [ weather, setWeather] = useState("");
     const [ weatherOptions, setWeatherOptions ] = useState([]);
+    const [ starttimeframe, setStartTimeFrame ] = useState("");
+    const [ endtimeframe, setEndTimeFrame ] = useState("");
 
     useEffect(() => {
+
+        setLocation("");
+        setWeather("");
         
         retrieveWeatherData();
         
@@ -29,6 +38,9 @@ function WeatherPage() {
         setLoading(true);
         let response = await fetch('/weatherRetrieval');
         let data = await response.json();
+
+        setStartTimeFrame(data.timeframe.start.split('T')[1].split('+')[0])
+        setEndTimeFrame(data.timeframe.end.split('T')[1].split('+')[0])
 
         let options = generateWeatherConditions(data.weather)
         setWeatherOptions(options);
@@ -69,7 +81,11 @@ function WeatherPage() {
 
         }
 
-        return placesData;
+        let validData = placesData.filter(data => (
+            data.forecast != null ? data : null
+        ))
+        
+        return validData;
 
     };
 
@@ -79,11 +95,9 @@ function WeatherPage() {
 
     function updateWeather(e) {
         setWeather(e)
-
-        searchForResults(location)
     }
 
-    async function searchForResults(str) {
+    async function searchForResults() {
         setLoading(true);
 
         let response = await fetch('/weatherRetrieval');
@@ -92,66 +106,88 @@ function WeatherPage() {
 
         let filtered = [];
 
-        result.map(location => {
-            if (location.name.includes(str) && location.forecast === weather) {
-                filtered.push(location);
+        result.map(place => {
+            if (place.name.toLowerCase().includes(location.toLowerCase()) && place.forecast.includes(weather)) {
+                console.log(place.forecast.includes(weather))
+                filtered.push(place);
             }
         })
 
         setData(filtered);
+        setWeather("");
+        setLocation("");
         setLoading(false);
+        
     }
     
     return (
         <>
-            {
-                loading ?
-                    <div>Loading Screen</div>
-                :
-                <div>
+            
+                <div id='weatherPage'>
 
-                    <div>
-                            Current Weather across Singapore (2hr Forecast)
+                    <div id = 'weatherPageUserInterface'>
+
+                        <div id = 'weatherPageUserInterfaceBox'>
+
+                            <div id = 'weatherPageDescription'>
+                                Current Weather across Singapore 
+                                <br />
+                                ({starttimeframe} - {endtimeframe})
+                            </div>
+
+                            <div id = 'weatherPageUserInputBox'>
+                                <input placeHolder='Enter a location here...' value={location} id = 'weatherPageUserInput' onChange={(e) => updateLocation(e)} />
+
+                                <DropDown id='weatherPageUserFilter' selected={weather} options={weatherOptions} updateField={updateWeather} />
+
+                                <button id='weatherPageSearchButton' className='btn btn-block' onClick={() => searchForResults()}>
+                                    Search
+                                </button>
+                            </div>
+
+                            
+
+                        </div>
+
                     </div>
 
-                    <div>
-                        <input onChange={(e) => updateLocation(e)} />
-                        <button onClick={() => searchForResults(location)}>
-                            Search
-                        </button>
-                    </div>
+                    <div id = 'weatherPageInfoDisplay'>
 
-                    <DropdownButton
-                        alignRight
-                        title="Filter by Weather"
-                        id="dropdown-menu-align-right"
-                        onSelect={updateWeather}
-                    >
                         {
-                            weatherOptions.map(w => (
-                                <Dropdown.Item eventKey={w}>{w}</Dropdown.Item>
-                            ))
+
+                            loading ?
+                                
+                                <Loading />
+
+                                :
+
+                                <div id = 'weatherPageInfoDisplayBox'>
+                                    <Row fluid id = 'weatherPageInfoDisplayRow'>
+
+                                        {
+                                            data.length !== 0 ? 
+
+                                            data.map(i => (
+
+                                                <InfoCard info={i} />
+                                                
+                                            )) :
+
+                                            <div id = 'weatherPageErrorMessage'>
+                                                <div>
+                                                    No valid forecasts matched your filters.
+                                                </div>
+                                            </div>
+                                        }
+
+                                        
+                                    </Row>
+                                </div>
+                    
                         }
-                        
-                    </DropdownButton>
 
-                    <div>
-                        <Row>
-                            {data.map(i => (
-                                <>
-                                    <Col xs={4}>
-                                        <Card>
-                                            <div>{i.name}</div>
-                                            <div>{i.forecast}</div>
-                                        </Card>
-                                    </Col>
-                                </>
-                            ))}
-                        </Row>
                     </div>
-                </div>
-
-            }
+            </div>
         </>
     )
 

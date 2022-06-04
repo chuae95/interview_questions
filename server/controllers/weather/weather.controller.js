@@ -6,13 +6,14 @@ const getWeather = async (req, res) => {
 
     let body = await data.json();
 
-    console.log(body.items[0].valid_period)
     let locations = body.area_metadata;
     let forecasts = body.items[0].forecasts;
+    let period = body.items[0].valid_period;
 
     res.send({
         places: locations,
-        weather: forecasts 
+        weather: forecasts,
+        timeframe: period
     })
 
 }

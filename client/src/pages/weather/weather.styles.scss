@@ -1,3 +1,74 @@
-.dropdown {
-    position: relative;
+#weatherPage {
+
+    display: grid;
+    grid-template-columns: 30% 70%;
+    background-color: lightblue;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+
+    #weatherPageUserInterface {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        #weatherPageUserInterfaceBox {
+            width: 100%;
+            height: 40%;
+            padding: 20px;
+            border-right: 1px solid white;
+
+            #weatherPageDescription {
+                font-size: 20px;
+                color: white;
+                font-weight: bold;
+                margin: 10px 0px;
+            }
+
+            #weatherPageUserInputBox {
+
+                #weatherPageUserInput {
+                    margin: 10px 0px;
+                    width: 100%;
+                }
+
+                #weatherPageUserFilter {
+                    margin: 10px 0px;
+                }
+
+                #weatherPageSearchButton {
+                    margin: 10px 0px;
+                }
+
+            }
+
+        }
+        
+
+       
+    }
+
+    #weatherPageInfoDisplay {
+        height: 100%;
+        overflow-y: scroll;
+        padding: 30px;
+
+        #weatherPageInfoDisplayBox {
+            height: 100%;
+        }
+
+    }
+
+}
+
+
+#weatherPageErrorMessage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: white;
 }
