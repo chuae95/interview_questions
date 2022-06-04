@@ -32,6 +32,7 @@ User will input an UEN. Verify the string comply with the correct format. Based 
 1. Business ACRA number
 2. Local Business ACRA number
 3. Other Entities UEN number
+
 The following assumptions were used for determining the UEN type and validity.
 1. UEN numbers will have 9 to 10 alphanumeric characters.
 2. The last character of the UEN number will be an alphabet.
